@@ -1,27 +1,34 @@
 {
   "name": "loki-grpc-client",
   "version": "0.1.0",
-  "description": "Skeleton template for a balena TypeScript project",
-  "homepage": "https://github.com/balena-io/balena-typescript-skeleton#readme",
+  "description": "Loki GRPC client for Node.js",
+  "homepage": "https://github.com/balena-io-modules/node-loki-grpc-client#readme",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "keywords": [
     "balena",
-    "typescript"
+    "typescript",
+    "loki",
+    "grpc",
+    "logging",
+    "logs"
   ],
   "author": "",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/balena-io/balena-typescript-skeleton.git"
+    "url": "git+https://github.com/balena-io-modules/node-loki-grpc-client.git"
   },
   "bugs": {
-    "url": "https://github.com/balena-io/balena-typescript-skeleton/issues"
+    "url": "https://github.com/balena-io-modules/node-loki-grpc-client/issues"
   },
   "files": [
-    "build/"
+    "build/",
+    "proto/"
   ],
   "scripts": {
+    "protoc:compile": "npx grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./proto/compiled --grpc_out=./proto/compiled --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` -I ./proto ./proto/*.proto",
+    "protoc:types": "npx grpc_tools_node_protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=./proto/compiled -I ./proto ./proto/*.proto",
     "clean": "rimraf build",
     "build": "npm run clean && tsc",
     "lint": "balena-lint --typescript src tests",
@@ -43,6 +50,7 @@
     "chai-as-promised": "^7.1.1",
     "dockerode": "^3.2.0",
     "grpc_tools_node_protoc_ts": "^4.0.0",
+    "grpc-tools": "^1.9.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.7",
     "mocha": "^7.2.0",
@@ -52,10 +60,8 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "@grpc/proto-loader": "^0.5.4",
     "@types/google-protobuf": "^3.7.2",
     "google-protobuf": "^3.12.2",
-    "grpc": "^1.24.2",
-    "grpc-tools": "^1.9.0"
+    "grpc": "^1.24.2"
   }
 }
