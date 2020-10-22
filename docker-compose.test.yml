@@ -10,3 +10,5 @@ services:
     depends_on:
       - loki
     command: ['npm', 'test']
+    environment:
+      LOKI_HOST: 'loki'
