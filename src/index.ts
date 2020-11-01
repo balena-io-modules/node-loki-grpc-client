@@ -2,7 +2,7 @@ import * as grpc from 'grpc';
 import { Metadata } from 'grpc';
 import { promisify } from 'util';
 
-export { status, ClientReadableStream } from 'grpc';
+export { status, ClientReadableStream, ServiceError } from 'grpc';
 export * from 'google-protobuf/google/protobuf/timestamp_pb.js';
 export * from '../proto/compiled/logproto_grpc_pb';
 export * from '../proto/compiled/logproto_pb';
