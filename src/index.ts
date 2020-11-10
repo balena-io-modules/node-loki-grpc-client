@@ -1,8 +1,14 @@
 import * as grpc from 'grpc';
-import { Metadata } from 'grpc';
+import { CallOptions, Metadata } from 'grpc';
 import { promisify } from 'util';
 
-export { status, ClientReadableStream, ServiceError } from 'grpc';
+export {
+	status,
+	ClientReadableStream,
+	ServiceError,
+	Metadata,
+	CallOptions,
+} from 'grpc';
 export * from 'google-protobuf/google/protobuf/timestamp_pb.js';
 export * from '../proto/compiled/logproto_grpc_pb';
 export * from '../proto/compiled/logproto_pb';
@@ -11,7 +17,11 @@ export interface IGrpcClientAsync {
 	[key: string]: IGrpcMethod;
 }
 
-export type IGrpcMethod = (data: any, metadata?: Metadata) => Promise<any>;
+export type IGrpcMethod = (
+	data: any,
+	metadata?: Metadata,
+	options?: CallOptions,
+) => Promise<any>;
 
 export function promisifyClient(client: any): IGrpcClientAsync {
 	const promisifiedClient = {} as IGrpcClientAsync;
