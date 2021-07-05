@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update dependencies
+      hash: 4436c428ce7c495a57758455d992171a58d249b0
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+      nested: []
+  version: 1.0.5
+  date: 2021-07-05T16:34:30.340Z
+- commits:
     - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
       hash: 60cebbb24b75395e20beea8610fabd68d4a69477
       body: ''
