@@ -1,47 +1,58 @@
 - commits:
-  - author: Vipul Gupta
-    body: ""
-    hash: 514bfb1a7f5ab1cb738f73d4099f61269919ddf6
-    subject: 'patch: Delete Codeowners'
-  date: "2021-07-05T13:46:49Z"
+    - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
+      hash: 60cebbb24b75395e20beea8610fabd68d4a69477
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+      nested: []
+  version: 1.0.4
+  date: 2021-07-05T16:22:59.844Z
+- commits:
+    - author: Vipul Gupta
+      body: ''
+      hash: 514bfb1a7f5ab1cb738f73d4099f61269919ddf6
+      subject: 'patch: Delete Codeowners'
+  date: '2021-07-05T13:46:49Z'
   version: 1.0.3
 - commits:
-  - author: Thomas Manning
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thomas Manning <thomasm@balena.io>
-    hash: 0675647e903fece8f84da94e7af7bf7f84fc2a29
-    subject: Add CallOptions to IGrpcMethod
-  date: "2020-11-10T15:38:33Z"
+    - author: Thomas Manning
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thomas Manning <thomasm@balena.io>
+      hash: 0675647e903fece8f84da94e7af7bf7f84fc2a29
+      subject: Add CallOptions to IGrpcMethod
+  date: '2020-11-10T15:38:33Z'
   version: 1.0.2
 - commits:
-  - author: Thomas Manning
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thomas Manning <thomasm@balena.io>
-    hash: d9899c837aa1be4ccfd76e27bcfa95deaf34d21b
-    subject: Add export of `grpc` ServiceError
-  date: "2020-11-01T09:29:06Z"
+    - author: Thomas Manning
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thomas Manning <thomasm@balena.io>
+      hash: d9899c837aa1be4ccfd76e27bcfa95deaf34d21b
+      subject: Add export of `grpc` ServiceError
+  date: '2020-11-01T09:29:06Z'
   version: 1.0.1
 - commits:
-  - author: Thomas Manning
-    body: ""
-    footers:
-      change-type: major
-      signed-off-by: Thomas Manning <thomasm@balena.io>
-    hash: dfbbd9d960b80d4f101eccf77700b2f05b5d70f1
-    subject: Add GRPC clients compiled from logproto
-  date: "2020-10-22T15:13:02Z"
+    - author: Thomas Manning
+      body: ''
+      footers:
+        change-type: major
+        signed-off-by: Thomas Manning <thomasm@balena.io>
+      hash: dfbbd9d960b80d4f101eccf77700b2f05b5d70f1
+      subject: Add GRPC clients compiled from logproto
+  date: '2020-10-22T15:13:02Z'
   version: 1.0.0
 - commits:
-  - author: Roman Mazur
-    body: ""
-    footers:
-      change-type: minor
-      signed-off-by: Thomas Manning <thomasm@balena.io>
-    hash: 2cc1d75675ce36d4f2cade3f33634ae81467f54c
-    subject: Configure tests with docker-compose
-  date: "2020-06-24T11:49:22Z"
+    - author: Roman Mazur
+      body: ''
+      footers:
+        change-type: minor
+        signed-off-by: Thomas Manning <thomasm@balena.io>
+      hash: 2cc1d75675ce36d4f2cade3f33634ae81467f54c
+      subject: Configure tests with docker-compose
+  date: '2020-06-24T11:49:22Z'
   version: 0.1.0
