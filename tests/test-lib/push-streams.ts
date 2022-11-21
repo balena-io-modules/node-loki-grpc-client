@@ -1,5 +1,5 @@
+import { promisify } from 'util';
 import {
-	promisifyClient,
 	PusherClient,
 	PushRequest,
 	PushResponse,
@@ -7,6 +7,7 @@ import {
 	createOrgIdMetadata,
 } from '../../src';
 import createStreamAdapter from './create-stream-adapter';
+import * as grpc from '@grpc/grpc-js';
 
 export default function pushStreams({
 	address = `${process.env.LOKI_HOST ? process.env.LOKI_HOST : ''}:9095`,
@@ -15,10 +16,11 @@ export default function pushStreams({
 	line = 'Hello World!',
 	labels = '{loki="cool"}',
 }): Promise<PushResponse> {
-	const pusher = promisifyClient(
-		new PusherClient(address, createInsecureCredentials()),
-	);
+	const pusher = new PusherClient(address, createInsecureCredentials());
 	const pushRequest = new PushRequest();
 	pushRequest.addStreams(createStreamAdapter({ date, line, labels }));
-	return pusher.push(pushRequest, createOrgIdMetadata(orgId));
+	const push = promisify<PushRequest, grpc.Metadata, PushResponse>(
+		pusher.push,
+	).bind(pusher);
+	return push(pushRequest, createOrgIdMetadata(orgId));
 }

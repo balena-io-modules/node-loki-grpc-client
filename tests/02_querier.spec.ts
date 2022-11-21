@@ -1,5 +1,6 @@
+import { promisify } from 'util';
 import { expect } from './test-lib/chai';
-import * as grpc from 'grpc';
+import * as grpc from '@grpc/grpc-js';
 import {
 	Timestamp,
 	QuerierClient,
@@ -7,7 +8,6 @@ import {
 	QueryResponse,
 	LabelRequest,
 	LabelResponse,
-	promisifyClient,
 	TailRequest,
 	SeriesResponse,
 	SeriesRequest,
@@ -17,7 +17,6 @@ import {
 } from '../src';
 import pushStreams from './test-lib/push-streams';
 import sleep from './test-lib/sleep';
-import * as logproto_pb from '../proto/compiled/logproto_pb';
 
 const lokiGrpcAddress = `${
 	process.env.LOKI_HOST ? process.env.LOKI_HOST : ''
@@ -58,7 +57,7 @@ describe('QuerierClient', function () {
 						expect(stream.getLabels()).to.be.equal(labels);
 					}
 				});
-				call.on('error', (err) => {
+				call.on('error', (err: any) => {
 					reject(err);
 				});
 				call.on('end', () => {
@@ -98,6 +97,7 @@ describe('QuerierClient', function () {
 					} else {
 						reject(Error(`Unexpected error: ${err.details}`));
 					}
+					call.destroy();
 				});
 				call.on('end', () => {
 					reject(Error('Expected error response to query with invalid labels'));
@@ -115,14 +115,18 @@ describe('QuerierClient', function () {
 			const pushResponse = await pushStreams({ date, labels, line });
 			expect(pushResponse).to.be.not.null;
 
-			const querier = promisifyClient(
-				new QuerierClient(lokiGrpcAddress, createInsecureCredentials()),
+			const querier = new QuerierClient(
+				lokiGrpcAddress,
+				createInsecureCredentials(),
 			);
 
 			const labelRequest = new LabelRequest();
 			labelRequest.setName(labels);
 
-			const labelResponse: LabelResponse = await querier.label(
+			const labelQuery = promisify<LabelRequest, grpc.Metadata, LabelResponse>(
+				querier.label,
+			).bind(querier);
+			const labelResponse: LabelResponse = await labelQuery(
 				labelRequest,
 				createOrgIdMetadata(),
 			);
@@ -153,14 +157,11 @@ describe('QuerierClient', function () {
 					receivedCount += 1;
 					if (receivedCount === 3) {
 						call.cancel();
+						resolve();
 					}
 				});
 				call.on('error', (err: Error & { details: string }) => {
-					if (err.details === 'Cancelled') {
-						resolve();
-					} else {
-						reject(err);
-					}
+					reject(err);
 				});
 
 				await sleep(500);
@@ -198,8 +199,9 @@ describe('QuerierClient', function () {
 			const pushResponse = await pushStreams({ date, labels, line });
 			expect(pushResponse).to.be.not.null;
 
-			const querier = promisifyClient(
-				new QuerierClient(lokiGrpcAddress, createInsecureCredentials()),
+			const querier = new QuerierClient(
+				lokiGrpcAddress,
+				createInsecureCredentials(),
 			);
 
 			const seriesRequest = new SeriesRequest();
@@ -207,7 +209,13 @@ describe('QuerierClient', function () {
 			seriesRequest.setEnd();
 			seriesRequest.setGroupsList([labels]);
 
-			const seriesResponse: SeriesResponse = await querier.series(
+			const seriesQuery = promisify<
+				SeriesRequest,
+				grpc.Metadata,
+				SeriesResponse
+			>(querier.series).bind(querier);
+
+			const seriesResponse: SeriesResponse = await seriesQuery(
 				seriesRequest,
 				createOrgIdMetadata(),
 			);
@@ -219,9 +227,6 @@ describe('QuerierClient', function () {
 	});
 
 	describe('QuerierClient.tailersCount', function () {
-		let tailOne: grpc.ClientReadableStream<logproto_pb.TailResponse>;
-		let tailTwo: grpc.ClientReadableStream<logproto_pb.TailResponse>;
-
 		it('should return count of tail calls', async function () {
 			return new Promise(async (resolve, reject) => {
 				const querier = new QuerierClient(
@@ -229,13 +234,13 @@ describe('QuerierClient', function () {
 					createInsecureCredentials(),
 				);
 
-				tailOne = querier.tail(
+				const tailOne = querier.tail(
 					new TailRequest().setQuery('{hello="world"}'),
 					createOrgIdMetadata(),
 				);
 				tailOne.on('error', reject);
 
-				tailTwo = querier.tail(
+				const tailTwo = querier.tail(
 					new TailRequest().setQuery('{loki="cool"}'),
 					createOrgIdMetadata(),
 				);
@@ -249,6 +254,8 @@ describe('QuerierClient', function () {
 					tailersCountRequest,
 					createOrgIdMetadata(),
 					(err, tailersCountResponse) => {
+						tailOne.cancel();
+						tailTwo.cancel();
 						if (err) {
 							reject(err);
 						} else {
@@ -262,11 +269,6 @@ describe('QuerierClient', function () {
 					},
 				);
 			});
-		});
-
-		after(function () {
-			tailOne.cancel();
-			tailTwo.cancel();
 		});
 	});
 });
