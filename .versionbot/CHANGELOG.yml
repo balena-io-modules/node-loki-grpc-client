@@ -1,4 +1,20 @@
 - commits:
+    - subject: Change grpc to grpc-js
+      hash: b02460898ebf112684ec2af34a501424e51edbe2
+      body: >
+        Rebuild proto js using grpc-js
+
+        Removed `promisifyClient` function, not compatible with `grpc-js` replace with promisify on client methods.
+      footer:
+        Change-type: major
+        change-type: major
+        Signed-off-by: Thomas Manning <thomasm@balena.io>
+        signed-off-by: Thomas Manning <thomasm@balena.io>
+      author: Thomas Manning
+  version: 2.0.0
+  title: ""
+  date: 2022-11-21T09:30:47.985Z
+- commits:
     - subject: Change CI from balenaCI to flowzone
       hash: ce15c60a35df37f2011d2b86bf38bcca0826e768
       body: |
