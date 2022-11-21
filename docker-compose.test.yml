@@ -1,14 +1,11 @@
 version: '2.1'
 
 services:
-  loki:
-    image: grafana/loki:1.5.0
-    ports:
-      - '9095:9095'
+
   sut:
     build: .
     depends_on:
       - loki
-    command: ['npm', 'test']
+    command: ['npm', 'run', 'test:node']
     environment:
       LOKI_HOST: 'loki'
