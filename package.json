@@ -34,8 +34,7 @@
     "lint": "balena-lint src tests",
     "lint-fix": "balena-lint --fix src tests",
     "test:node": "mocha -r ts-node/register --reporter spec tests/**/*.spec.ts",
-    "test": "npm run build && npm run lint && npm run test:node",
-    "test:fast": "npm run build && npm run test:node",
+    "test": "echo Run tests via compose SUT",
     "prepack": "npm run build"
   },
   "devDependencies": {
