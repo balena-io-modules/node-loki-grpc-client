@@ -27,8 +27,8 @@
     "proto/"
   ],
   "scripts": {
-    "protoc:compile": "npx grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./proto/compiled --grpc_out=./proto/compiled --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` -I ./proto ./proto/*.proto",
-    "protoc:types": "npx grpc_tools_node_protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=./proto/compiled -I ./proto ./proto/*.proto",
+    "protoc:compile": "npx grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./proto/compiled --grpc_out=grpc_js:./proto/compiled --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` -I ./proto ./proto/*.proto",
+    "protoc:types": "npx grpc_tools_node_protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=grpc_js:./proto/compiled -I ./proto ./proto/*.proto",
     "clean": "rimraf build",
     "build": "npm run clean && tsc",
     "lint": "balena-lint src tests",
@@ -44,12 +44,11 @@
     "@types/dockerode": "^2.5.34",
     "@types/mocha": "^8.2.2",
     "@types/node": "^14.17.4",
-    "balena-config-karma": "^2.3.1",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "dockerode": "^3.3.0",
-    "grpc-tools": "^1.11.2",
-    "grpc_tools_node_protoc_ts": "^4.1.5",
+    "grpc_tools_node_protoc_ts": "^5.3.2",
+    "grpc-tools": "^1.11.3",
     "husky": "^4.3.8",
     "lint-staged": "^11.0.0",
     "mocha": "^8.4.0",
@@ -59,9 +58,9 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.7.3",
     "@types/google-protobuf": "^3.15.2",
-    "google-protobuf": "^3.17.3",
-    "grpc": "^1.24.10"
+    "google-protobuf": "^3.17.3"
   },
   "versionist": {
     "publishedAt": "2022-11-21T07:58:16.084Z"
