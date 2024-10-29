@@ -84,6 +84,10 @@ export class QueryRequest extends jspb.Message {
 	setEnd(value?: google_protobuf_timestamp_pb.Timestamp): QueryRequest;
 	getDirection(): Direction;
 	setDirection(value: Direction): QueryRequest;
+	clearShardsList(): void;
+	getShardsList(): Array<string>;
+	setShardsList(value: Array<string>): QueryRequest;
+	addShards(value: string, index?: number): string;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): QueryRequest.AsObject;
@@ -113,6 +117,88 @@ export namespace QueryRequest {
 		start?: google_protobuf_timestamp_pb.Timestamp.AsObject;
 		end?: google_protobuf_timestamp_pb.Timestamp.AsObject;
 		direction: Direction;
+		shardsList: Array<string>;
+	};
+}
+
+export class SampleQueryRequest extends jspb.Message {
+	getSelector(): string;
+	setSelector(value: string): SampleQueryRequest;
+
+	hasStart(): boolean;
+	clearStart(): void;
+	getStart(): google_protobuf_timestamp_pb.Timestamp | undefined;
+	setStart(value?: google_protobuf_timestamp_pb.Timestamp): SampleQueryRequest;
+
+	hasEnd(): boolean;
+	clearEnd(): void;
+	getEnd(): google_protobuf_timestamp_pb.Timestamp | undefined;
+	setEnd(value?: google_protobuf_timestamp_pb.Timestamp): SampleQueryRequest;
+	clearShardsList(): void;
+	getShardsList(): Array<string>;
+	setShardsList(value: Array<string>): SampleQueryRequest;
+	addShards(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): SampleQueryRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: SampleQueryRequest,
+	): SampleQueryRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: {
+		[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>;
+	};
+	static serializeBinaryToWriter(
+		message: SampleQueryRequest,
+		writer: jspb.BinaryWriter,
+	): void;
+	static deserializeBinary(bytes: Uint8Array): SampleQueryRequest;
+	static deserializeBinaryFromReader(
+		message: SampleQueryRequest,
+		reader: jspb.BinaryReader,
+	): SampleQueryRequest;
+}
+
+export namespace SampleQueryRequest {
+	export type AsObject = {
+		selector: string;
+		start?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+		end?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+		shardsList: Array<string>;
+	};
+}
+
+export class SampleQueryResponse extends jspb.Message {
+	clearSeriesList(): void;
+	getSeriesList(): Array<Series>;
+	setSeriesList(value: Array<Series>): SampleQueryResponse;
+	addSeries(value?: Series, index?: number): Series;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): SampleQueryResponse.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: SampleQueryResponse,
+	): SampleQueryResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: {
+		[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>;
+	};
+	static serializeBinaryToWriter(
+		message: SampleQueryResponse,
+		writer: jspb.BinaryWriter,
+	): void;
+	static deserializeBinary(bytes: Uint8Array): SampleQueryResponse;
+	static deserializeBinaryFromReader(
+		message: SampleQueryResponse,
+		reader: jspb.BinaryReader,
+	): SampleQueryResponse;
+}
+
+export namespace SampleQueryResponse {
+	export type AsObject = {
+		seriesList: Array<Series.AsObject>;
 	};
 }
 
@@ -300,6 +386,73 @@ export namespace EntryAdapter {
 	};
 }
 
+export class Sample extends jspb.Message {
+	getTimestamp(): number;
+	setTimestamp(value: number): Sample;
+	getValue(): number;
+	setValue(value: number): Sample;
+	getHash(): number;
+	setHash(value: number): Sample;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): Sample.AsObject;
+	static toObject(includeInstance: boolean, msg: Sample): Sample.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: {
+		[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>;
+	};
+	static serializeBinaryToWriter(
+		message: Sample,
+		writer: jspb.BinaryWriter,
+	): void;
+	static deserializeBinary(bytes: Uint8Array): Sample;
+	static deserializeBinaryFromReader(
+		message: Sample,
+		reader: jspb.BinaryReader,
+	): Sample;
+}
+
+export namespace Sample {
+	export type AsObject = {
+		timestamp: number;
+		value: number;
+		hash: number;
+	};
+}
+
+export class Series extends jspb.Message {
+	getLabels(): string;
+	setLabels(value: string): Series;
+	clearSamplesList(): void;
+	getSamplesList(): Array<Sample>;
+	setSamplesList(value: Array<Sample>): Series;
+	addSamples(value?: Sample, index?: number): Sample;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): Series.AsObject;
+	static toObject(includeInstance: boolean, msg: Series): Series.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: {
+		[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>;
+	};
+	static serializeBinaryToWriter(
+		message: Series,
+		writer: jspb.BinaryWriter,
+	): void;
+	static deserializeBinary(bytes: Uint8Array): Series;
+	static deserializeBinaryFromReader(
+		message: Series,
+		reader: jspb.BinaryReader,
+	): Series;
+}
+
+export namespace Series {
+	export type AsObject = {
+		labels: string;
+		samplesList: Array<Sample.AsObject>;
+	};
+}
+
 export class TailRequest extends jspb.Message {
 	getQuery(): string;
 	setQuery(value: string): TailRequest;
@@ -395,6 +548,10 @@ export class SeriesRequest extends jspb.Message {
 	getGroupsList(): Array<string>;
 	setGroupsList(value: Array<string>): SeriesRequest;
 	addGroups(value: string, index?: number): string;
+	clearShardsList(): void;
+	getShardsList(): Array<string>;
+	setShardsList(value: Array<string>): SeriesRequest;
+	addShards(value: string, index?: number): string;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): SeriesRequest.AsObject;
@@ -422,6 +579,7 @@ export namespace SeriesRequest {
 		start?: google_protobuf_timestamp_pb.Timestamp.AsObject;
 		end?: google_protobuf_timestamp_pb.Timestamp.AsObject;
 		groupsList: Array<string>;
+		shardsList: Array<string>;
 	};
 }
 
@@ -716,6 +874,82 @@ export class TailersCountResponse extends jspb.Message {
 export namespace TailersCountResponse {
 	export type AsObject = {
 		count: number;
+	};
+}
+
+export class GetChunkIDsRequest extends jspb.Message {
+	getMatchers(): string;
+	setMatchers(value: string): GetChunkIDsRequest;
+
+	hasStart(): boolean;
+	clearStart(): void;
+	getStart(): google_protobuf_timestamp_pb.Timestamp | undefined;
+	setStart(value?: google_protobuf_timestamp_pb.Timestamp): GetChunkIDsRequest;
+
+	hasEnd(): boolean;
+	clearEnd(): void;
+	getEnd(): google_protobuf_timestamp_pb.Timestamp | undefined;
+	setEnd(value?: google_protobuf_timestamp_pb.Timestamp): GetChunkIDsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): GetChunkIDsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: GetChunkIDsRequest,
+	): GetChunkIDsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: {
+		[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>;
+	};
+	static serializeBinaryToWriter(
+		message: GetChunkIDsRequest,
+		writer: jspb.BinaryWriter,
+	): void;
+	static deserializeBinary(bytes: Uint8Array): GetChunkIDsRequest;
+	static deserializeBinaryFromReader(
+		message: GetChunkIDsRequest,
+		reader: jspb.BinaryReader,
+	): GetChunkIDsRequest;
+}
+
+export namespace GetChunkIDsRequest {
+	export type AsObject = {
+		matchers: string;
+		start?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+		end?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+	};
+}
+
+export class GetChunkIDsResponse extends jspb.Message {
+	clearChunkidsList(): void;
+	getChunkidsList(): Array<string>;
+	setChunkidsList(value: Array<string>): GetChunkIDsResponse;
+	addChunkids(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): GetChunkIDsResponse.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: GetChunkIDsResponse,
+	): GetChunkIDsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: {
+		[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>;
+	};
+	static serializeBinaryToWriter(
+		message: GetChunkIDsResponse,
+		writer: jspb.BinaryWriter,
+	): void;
+	static deserializeBinary(bytes: Uint8Array): GetChunkIDsResponse;
+	static deserializeBinaryFromReader(
+		message: GetChunkIDsResponse,
+		reader: jspb.BinaryReader,
+	): GetChunkIDsResponse;
+}
+
+export namespace GetChunkIDsResponse {
+	export type AsObject = {
+		chunkidsList: Array<string>;
 	};
 }
 
