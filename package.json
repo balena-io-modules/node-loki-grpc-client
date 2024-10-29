@@ -42,7 +42,7 @@
     "@types/chai": "^4.3.20",
     "@types/chai-as-promised": "^7.1.8",
     "@types/mocha": "^8.2.3",
-    "@types/node": "^14.18.63",
+    "@types/node": "^20.17.2",
     "chai": "^4.5.0",
     "chai-as-promised": "^7.1.2",
     "grpc_tools_node_protoc_ts": "^5.3.3",
@@ -61,5 +61,9 @@
   },
   "versionist": {
     "publishedAt": "2024-11-18T17:36:52.592Z"
+  },
+  "engines": {
+    "node": ">=20.18.0",
+    "npm": "^10.7.0"
   }
 }
