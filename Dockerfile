@@ -8,5 +8,5 @@ RUN npm install
 COPY *.json ./
 COPY src ./src
 COPY proto ./proto
-COPY tests ./tests
 RUN npm run build
+COPY tests ./tests
