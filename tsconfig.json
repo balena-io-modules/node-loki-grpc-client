@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
+		"module": "Node16",
 		"outDir": "build",
 		"noUnusedParameters": true,
 		"noUnusedLocals": true,
