@@ -7,15 +7,13 @@ See `tests/` for examples how to use the `Pusher` and `Querier` clients.
 #### Docker compose for ci
 
 ```
-docker-compose -f docker-compose.test.yml up
+docker compose -f docker-compose.test.yml -f docker-compose.yml run sut
 ```
 
 #### Locally for debugging
 
 ```
-docker run --network host 'grafana/loki:1.5.0' '-auth.enabled=true' '-config.file=/etc/loki/local-config.yaml'
-export LOKI_HOST=127.0.0.1  
-npm test
+docker compose -f docker-compose.test.yml -f docker-compose.yml run --build sut
 ```
 
 ## Upgrading
@@ -24,4 +22,4 @@ Copy `logproto.proto` from the Loki repo and any dependencies to the `./proto` d
 
 Then run `npm run protoc:compile` and `npm run protoc:types` to generate updated clients.
 
-Update `LOKI_IMAGE` in `tests/00_setup.spec.ts` to test against new version.
+Update loki image in docker-compose.yml to test against new versions.
