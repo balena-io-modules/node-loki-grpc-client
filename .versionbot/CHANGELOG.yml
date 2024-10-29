@@ -1,10 +1,29 @@
 - commits:
+    - subject: Rebuild with latest protobuf deps
+      hash: b40ab45fc3c830e9d14fb7cc507b0553a26e2b62
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+    - subject: Update README.md
+      hash: ea131f38cd2eb60d0e7337f905bb800931d6102a
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 2.0.1
+  title: ""
+  date: 2024-10-29T17:47:24.170Z
+- commits:
     - subject: Change grpc to grpc-js
       hash: b02460898ebf112684ec2af34a501424e51edbe2
       body: >
         Rebuild proto js using grpc-js
 
-        Removed `promisifyClient` function, not compatible with `grpc-js` replace with promisify on client methods.
+        Removed `promisifyClient` function, not compatible with `grpc-js`
+        replace with promisify on client methods.
       footer:
         Change-type: major
         change-type: major

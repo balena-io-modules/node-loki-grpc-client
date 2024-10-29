@@ -1,6 +1,6 @@
 {
   "name": "loki-grpc-client",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Loki GRPC client for Node.js",
   "homepage": "https://github.com/balena-io-modules/node-loki-grpc-client#readme",
   "main": "build/index.js",
@@ -60,6 +60,6 @@
     "google-protobuf": "^3.21.4"
   },
   "versionist": {
-    "publishedAt": "2022-11-21T09:30:48.062Z"
+    "publishedAt": "2024-10-29T17:47:24.219Z"
   }
 }
