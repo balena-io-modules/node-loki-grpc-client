@@ -96,10 +96,12 @@ export class PusherClient extends grpc.Client implements IPusherClient {
 interface IQuerierService
 	extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
 	query: IQuerierService_IQuery;
+	querySample: IQuerierService_IQuerySample;
 	label: IQuerierService_ILabel;
 	tail: IQuerierService_ITail;
 	series: IQuerierService_ISeries;
 	tailersCount: IQuerierService_ITailersCount;
+	getChunkIDs: IQuerierService_IGetChunkIDs;
 }
 
 interface IQuerierService_IQuery
@@ -114,6 +116,19 @@ interface IQuerierService_IQuery
 	requestDeserialize: grpc.deserialize<logproto_pb.QueryRequest>;
 	responseSerialize: grpc.serialize<logproto_pb.QueryResponse>;
 	responseDeserialize: grpc.deserialize<logproto_pb.QueryResponse>;
+}
+interface IQuerierService_IQuerySample
+	extends grpc.MethodDefinition<
+		logproto_pb.SampleQueryRequest,
+		logproto_pb.SampleQueryResponse
+	> {
+	path: '/logproto.Querier/QuerySample';
+	requestStream: false;
+	responseStream: true;
+	requestSerialize: grpc.serialize<logproto_pb.SampleQueryRequest>;
+	requestDeserialize: grpc.deserialize<logproto_pb.SampleQueryRequest>;
+	responseSerialize: grpc.serialize<logproto_pb.SampleQueryResponse>;
+	responseDeserialize: grpc.deserialize<logproto_pb.SampleQueryResponse>;
 }
 interface IQuerierService_ILabel
 	extends grpc.MethodDefinition<
@@ -167,6 +182,19 @@ interface IQuerierService_ITailersCount
 	responseSerialize: grpc.serialize<logproto_pb.TailersCountResponse>;
 	responseDeserialize: grpc.deserialize<logproto_pb.TailersCountResponse>;
 }
+interface IQuerierService_IGetChunkIDs
+	extends grpc.MethodDefinition<
+		logproto_pb.GetChunkIDsRequest,
+		logproto_pb.GetChunkIDsResponse
+	> {
+	path: '/logproto.Querier/GetChunkIDs';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<logproto_pb.GetChunkIDsRequest>;
+	requestDeserialize: grpc.deserialize<logproto_pb.GetChunkIDsRequest>;
+	responseSerialize: grpc.serialize<logproto_pb.GetChunkIDsResponse>;
+	responseDeserialize: grpc.deserialize<logproto_pb.GetChunkIDsResponse>;
+}
 
 export const QuerierService: IQuerierService;
 
@@ -174,6 +202,10 @@ export interface IQuerierServer extends grpc.UntypedServiceImplementation {
 	query: grpc.handleServerStreamingCall<
 		logproto_pb.QueryRequest,
 		logproto_pb.QueryResponse
+	>;
+	querySample: grpc.handleServerStreamingCall<
+		logproto_pb.SampleQueryRequest,
+		logproto_pb.SampleQueryResponse
 	>;
 	label: grpc.handleUnaryCall<
 		logproto_pb.LabelRequest,
@@ -191,6 +223,10 @@ export interface IQuerierServer extends grpc.UntypedServiceImplementation {
 		logproto_pb.TailersCountRequest,
 		logproto_pb.TailersCountResponse
 	>;
+	getChunkIDs: grpc.handleUnaryCall<
+		logproto_pb.GetChunkIDsRequest,
+		logproto_pb.GetChunkIDsResponse
+	>;
 }
 
 export interface IQuerierClient {
@@ -203,6 +239,15 @@ export interface IQuerierClient {
 		metadata?: grpc.Metadata,
 		options?: Partial<grpc.CallOptions>,
 	): grpc.ClientReadableStream<logproto_pb.QueryResponse>;
+	querySample(
+		request: logproto_pb.SampleQueryRequest,
+		options?: Partial<grpc.CallOptions>,
+	): grpc.ClientReadableStream<logproto_pb.SampleQueryResponse>;
+	querySample(
+		request: logproto_pb.SampleQueryRequest,
+		metadata?: grpc.Metadata,
+		options?: Partial<grpc.CallOptions>,
+	): grpc.ClientReadableStream<logproto_pb.SampleQueryResponse>;
 	label(
 		request: logproto_pb.LabelRequest,
 		callback: (
@@ -282,6 +327,30 @@ export interface IQuerierClient {
 		callback: (
 			error: grpc.ServiceError | null,
 			response: logproto_pb.TailersCountResponse,
+		) => void,
+	): grpc.ClientUnaryCall;
+	getChunkIDs(
+		request: logproto_pb.GetChunkIDsRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: logproto_pb.GetChunkIDsResponse,
+		) => void,
+	): grpc.ClientUnaryCall;
+	getChunkIDs(
+		request: logproto_pb.GetChunkIDsRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: logproto_pb.GetChunkIDsResponse,
+		) => void,
+	): grpc.ClientUnaryCall;
+	getChunkIDs(
+		request: logproto_pb.GetChunkIDsRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: logproto_pb.GetChunkIDsResponse,
 		) => void,
 	): grpc.ClientUnaryCall;
 }
@@ -301,6 +370,15 @@ export class QuerierClient extends grpc.Client implements IQuerierClient {
 		metadata?: grpc.Metadata,
 		options?: Partial<grpc.CallOptions>,
 	): grpc.ClientReadableStream<logproto_pb.QueryResponse>;
+	public querySample(
+		request: logproto_pb.SampleQueryRequest,
+		options?: Partial<grpc.CallOptions>,
+	): grpc.ClientReadableStream<logproto_pb.SampleQueryResponse>;
+	public querySample(
+		request: logproto_pb.SampleQueryRequest,
+		metadata?: grpc.Metadata,
+		options?: Partial<grpc.CallOptions>,
+	): grpc.ClientReadableStream<logproto_pb.SampleQueryResponse>;
 	public label(
 		request: logproto_pb.LabelRequest,
 		callback: (
@@ -380,6 +458,30 @@ export class QuerierClient extends grpc.Client implements IQuerierClient {
 		callback: (
 			error: grpc.ServiceError | null,
 			response: logproto_pb.TailersCountResponse,
+		) => void,
+	): grpc.ClientUnaryCall;
+	public getChunkIDs(
+		request: logproto_pb.GetChunkIDsRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: logproto_pb.GetChunkIDsResponse,
+		) => void,
+	): grpc.ClientUnaryCall;
+	public getChunkIDs(
+		request: logproto_pb.GetChunkIDsRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: logproto_pb.GetChunkIDsResponse,
+		) => void,
+	): grpc.ClientUnaryCall;
+	public getChunkIDs(
+		request: logproto_pb.GetChunkIDsRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: logproto_pb.GetChunkIDsResponse,
 		) => void,
 	): grpc.ClientUnaryCall;
 }

@@ -6,6 +6,28 @@ var logproto_pb = require('./logproto_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 var gogo_pb = require('./gogo_pb.js');
 
+function serialize_logproto_GetChunkIDsRequest(arg) {
+  if (!(arg instanceof logproto_pb.GetChunkIDsRequest)) {
+    throw new Error('Expected argument of type logproto.GetChunkIDsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_logproto_GetChunkIDsRequest(buffer_arg) {
+  return logproto_pb.GetChunkIDsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_logproto_GetChunkIDsResponse(arg) {
+  if (!(arg instanceof logproto_pb.GetChunkIDsResponse)) {
+    throw new Error('Expected argument of type logproto.GetChunkIDsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_logproto_GetChunkIDsResponse(buffer_arg) {
+  return logproto_pb.GetChunkIDsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_logproto_LabelRequest(arg) {
   if (!(arg instanceof logproto_pb.LabelRequest)) {
     throw new Error('Expected argument of type logproto.LabelRequest');
@@ -70,6 +92,28 @@ function serialize_logproto_QueryResponse(arg) {
 
 function deserialize_logproto_QueryResponse(buffer_arg) {
   return logproto_pb.QueryResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_logproto_SampleQueryRequest(arg) {
+  if (!(arg instanceof logproto_pb.SampleQueryRequest)) {
+    throw new Error('Expected argument of type logproto.SampleQueryRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_logproto_SampleQueryRequest(buffer_arg) {
+  return logproto_pb.SampleQueryRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_logproto_SampleQueryResponse(arg) {
+  if (!(arg instanceof logproto_pb.SampleQueryResponse)) {
+    throw new Error('Expected argument of type logproto.SampleQueryResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_logproto_SampleQueryResponse(buffer_arg) {
+  return logproto_pb.SampleQueryResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_logproto_SeriesRequest(arg) {
@@ -188,6 +232,17 @@ var QuerierService = exports.QuerierService = {
     responseSerialize: serialize_logproto_QueryResponse,
     responseDeserialize: deserialize_logproto_QueryResponse,
   },
+  querySample: {
+    path: '/logproto.Querier/QuerySample',
+    requestStream: false,
+    responseStream: true,
+    requestType: logproto_pb.SampleQueryRequest,
+    responseType: logproto_pb.SampleQueryResponse,
+    requestSerialize: serialize_logproto_SampleQueryRequest,
+    requestDeserialize: deserialize_logproto_SampleQueryRequest,
+    responseSerialize: serialize_logproto_SampleQueryResponse,
+    responseDeserialize: deserialize_logproto_SampleQueryResponse,
+  },
   label: {
     path: '/logproto.Querier/Label',
     requestStream: false,
@@ -231,6 +286,17 @@ var QuerierService = exports.QuerierService = {
     requestDeserialize: deserialize_logproto_TailersCountRequest,
     responseSerialize: serialize_logproto_TailersCountResponse,
     responseDeserialize: deserialize_logproto_TailersCountResponse,
+  },
+  getChunkIDs: {
+    path: '/logproto.Querier/GetChunkIDs',
+    requestStream: false,
+    responseStream: false,
+    requestType: logproto_pb.GetChunkIDsRequest,
+    responseType: logproto_pb.GetChunkIDsResponse,
+    requestSerialize: serialize_logproto_GetChunkIDsRequest,
+    requestDeserialize: deserialize_logproto_GetChunkIDsRequest,
+    responseSerialize: serialize_logproto_GetChunkIDsResponse,
+    responseDeserialize: deserialize_logproto_GetChunkIDsResponse,
   },
 };
 
