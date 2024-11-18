@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update protobuf definitions to loki 2.4.2
+      hash: c7e7b7945ba81ccb53f9519240d66b69067f2e4d
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+  version: 2.1.0
+  title: ""
+  date: 2024-11-18T17:36:52.547Z
+- commits:
     - subject: Rebuild with latest protobuf deps
       hash: b40ab45fc3c830e9d14fb7cc507b0553a26e2b62
       body: ""
