@@ -350,6 +350,40 @@ export namespace StreamAdapter {
 	};
 }
 
+export class LabelPairAdapter extends jspb.Message {
+	getName(): string;
+	setName(value: string): LabelPairAdapter;
+	getValue(): string;
+	setValue(value: string): LabelPairAdapter;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): LabelPairAdapter.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: LabelPairAdapter,
+	): LabelPairAdapter.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: {
+		[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>;
+	};
+	static serializeBinaryToWriter(
+		message: LabelPairAdapter,
+		writer: jspb.BinaryWriter,
+	): void;
+	static deserializeBinary(bytes: Uint8Array): LabelPairAdapter;
+	static deserializeBinaryFromReader(
+		message: LabelPairAdapter,
+		reader: jspb.BinaryReader,
+	): LabelPairAdapter;
+}
+
+export namespace LabelPairAdapter {
+	export type AsObject = {
+		name: string;
+		value: string;
+	};
+}
+
 export class EntryAdapter extends jspb.Message {
 	hasTimestamp(): boolean;
 	clearTimestamp(): void;
@@ -357,6 +391,13 @@ export class EntryAdapter extends jspb.Message {
 	setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): EntryAdapter;
 	getLine(): string;
 	setLine(value: string): EntryAdapter;
+	clearStructuredmetadataList(): void;
+	getStructuredmetadataList(): Array<LabelPairAdapter>;
+	setStructuredmetadataList(value: Array<LabelPairAdapter>): EntryAdapter;
+	addStructuredmetadata(
+		value?: LabelPairAdapter,
+		index?: number,
+	): LabelPairAdapter;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): EntryAdapter.AsObject;
@@ -383,6 +424,7 @@ export namespace EntryAdapter {
 	export type AsObject = {
 		timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject;
 		line: string;
+		structuredmetadataList: Array<LabelPairAdapter.AsObject>;
 	};
 }
 
