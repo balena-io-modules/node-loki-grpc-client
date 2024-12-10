@@ -1,13 +1,13 @@
 import { promisify } from 'util';
+import type { PushResponse } from '../../src';
 import {
 	PusherClient,
 	PushRequest,
-	PushResponse,
 	createInsecureCredentials,
 	createOrgIdMetadata,
 } from '../../src';
 import createStreamAdapter from './create-stream-adapter';
-import * as grpc from '@grpc/grpc-js';
+import type * as grpc from '@grpc/grpc-js';
 
 export default function pushStreams({
 	address = `${process.env.LOKI_HOST ? process.env.LOKI_HOST : ''}:9095`,

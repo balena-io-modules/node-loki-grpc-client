@@ -1,15 +1,13 @@
 import { promisify } from 'util';
 import { expect } from './test-lib/chai';
 import * as grpc from '@grpc/grpc-js';
+import type { QueryResponse, LabelResponse, SeriesResponse } from '../src';
 import {
 	Timestamp,
 	QuerierClient,
 	QueryRequest,
-	QueryResponse,
 	LabelRequest,
-	LabelResponse,
 	TailRequest,
-	SeriesResponse,
 	SeriesRequest,
 	TailersCountRequest,
 	createInsecureCredentials,
@@ -25,32 +23,32 @@ const lokiGrpcAddress = `${
 describe('QuerierClient', function () {
 	describe('QuerierClient.query', function () {
 		it('should query in range between start and end timestamp', async function () {
-			return new Promise(async (resolve, reject) => {
-				const date = new Date();
-				const labels = '{query="me"}';
-				const line = 'Hey you found me!';
+			const date = new Date();
+			const labels = '{query="me"}';
+			const line = 'Hey you found me!';
 
-				const pushResponse = await pushStreams({ date, labels, line });
-				expect(pushResponse).to.be.not.null;
+			const pushResponse = await pushStreams({ date, labels, line });
+			expect(pushResponse).to.be.not.null;
 
-				const querier = new QuerierClient(
-					lokiGrpcAddress,
-					createInsecureCredentials(),
-				);
+			const querier = new QuerierClient(
+				lokiGrpcAddress,
+				createInsecureCredentials(),
+			);
 
-				const startTimestamp = new Timestamp();
-				startTimestamp.fromDate(new Date(Date.now() - 10000 * 60));
+			const startTimestamp = new Timestamp();
+			startTimestamp.fromDate(new Date(Date.now() - 10000 * 60));
 
-				const endTimestamp = new Timestamp();
-				endTimestamp.fromDate(new Date());
+			const endTimestamp = new Timestamp();
+			endTimestamp.fromDate(new Date());
 
-				const queryRequest = new QueryRequest();
-				queryRequest.setSelector(labels);
-				queryRequest.setLimit(1000);
-				queryRequest.setStart(startTimestamp);
-				queryRequest.setEnd(endTimestamp);
-				queryRequest.setDirection(0);
+			const queryRequest = new QueryRequest();
+			queryRequest.setSelector(labels);
+			queryRequest.setLimit(1000);
+			queryRequest.setStart(startTimestamp);
+			queryRequest.setEnd(endTimestamp);
+			queryRequest.setDirection(0);
 
+			return new Promise((resolve, reject) => {
 				const call = querier.query(queryRequest, createOrgIdMetadata());
 				call.on('data', (queryResponse: QueryResponse) => {
 					for (const stream of queryResponse.getStreamsList()) {
@@ -67,25 +65,25 @@ describe('QuerierClient', function () {
 		});
 
 		it('should error if label query is malformed', async function () {
-			return new Promise(async (resolve, reject) => {
-				const querier = new QuerierClient(
-					lokiGrpcAddress,
-					createInsecureCredentials(),
-				);
+			const querier = new QuerierClient(
+				lokiGrpcAddress,
+				createInsecureCredentials(),
+			);
 
-				const startTimestamp = new Timestamp();
-				startTimestamp.fromDate(new Date(Date.now() - 10000 * 60));
+			const startTimestamp = new Timestamp();
+			startTimestamp.fromDate(new Date(Date.now() - 10000 * 60));
 
-				const endTimestamp = new Timestamp();
-				endTimestamp.fromDate(new Date());
+			const endTimestamp = new Timestamp();
+			endTimestamp.fromDate(new Date());
 
-				const queryRequest = new QueryRequest();
-				queryRequest.setSelector('__INVALID_LABELS__');
-				queryRequest.setLimit(1000);
-				queryRequest.setStart(startTimestamp);
-				queryRequest.setEnd(endTimestamp);
-				queryRequest.setDirection(0);
+			const queryRequest = new QueryRequest();
+			queryRequest.setSelector('__INVALID_LABELS__');
+			queryRequest.setLimit(1000);
+			queryRequest.setStart(startTimestamp);
+			queryRequest.setEnd(endTimestamp);
+			queryRequest.setDirection(0);
 
+			await new Promise<void>((resolve, reject) => {
 				const call = querier.query(queryRequest, createOrgIdMetadata());
 
 				call.on('data', () => {
@@ -139,7 +137,8 @@ describe('QuerierClient', function () {
 		it('should tail all pushed streams', async function () {
 			this.timeout(3000);
 
-			return new Promise(async (resolve, reject) => {
+			// eslint-disable-next-line no-async-promise-executor
+			await new Promise<void>(async (resolve, reject) => {
 				const querier = new QuerierClient(
 					lokiGrpcAddress,
 					createInsecureCredentials(),
@@ -150,7 +149,7 @@ describe('QuerierClient', function () {
 				const tailRequest = new TailRequest();
 				tailRequest.setQuery(labels);
 
-				let receivedCount: number = 0;
+				let receivedCount = 0;
 
 				const call = querier.tail(tailRequest, createOrgIdMetadata());
 				call.on('data', () => {
@@ -228,7 +227,8 @@ describe('QuerierClient', function () {
 
 	describe('QuerierClient.tailersCount', function () {
 		it('should return count of tail calls', async function () {
-			return new Promise(async (resolve, reject) => {
+			// eslint-disable-next-line no-async-promise-executor
+			await new Promise<void>(async (resolve, reject) => {
 				const querier = new QuerierClient(
 					lokiGrpcAddress,
 					createInsecureCredentials(),

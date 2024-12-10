@@ -1,5 +1,5 @@
 {
 	"*.ts": [
-		"balena-lint --fix"
-	],
+		"balena-lint --fix -t tsconfig.dev.json"
+	]
 }
