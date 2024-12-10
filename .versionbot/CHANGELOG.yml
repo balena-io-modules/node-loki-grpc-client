@@ -1,4 +1,15 @@
 - commits:
+    - subject: Add support for structuredMetadata
+      hash: f8e225ecc12245668e95cf1377edba847102dc91
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+  version: 2.2.0
+  title: ""
+  date: 2024-12-10T18:54:18.056Z
+- commits:
     - subject: Update protobuf definitions to loki 2.4.2
       hash: c7e7b7945ba81ccb53f9519240d66b69067f2e4d
       body: ""
