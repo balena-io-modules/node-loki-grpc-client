@@ -2,6 +2,6 @@ version: '2.1'
 
 services:
   loki:
-    image: grafana/loki:1.5.0
+    image: grafana/loki:1.5.0@sha256:922b3f412fdd9a8fb01115b6aebf5dac162647ce1c5ee3637ce1e2cff69e097b
     ports:
       - '9095:9095'
